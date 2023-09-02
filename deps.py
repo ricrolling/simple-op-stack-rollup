@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import sys
+import subprocess
 
 import libroll as lib
 import term
@@ -30,6 +31,15 @@ def basic_setup():
 
 
 ####################################################################################################
+
+def setup_python_deps():
+    """
+    Does some basic setup (creating directories, modifying path), performing basic checks.
+    """
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "tomli"])
+
+####################################################################################################
+
 
 def check_basic_prerequisites():
     """
