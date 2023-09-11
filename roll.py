@@ -143,13 +143,19 @@ def launch_blockscout():
     log_file = "logs/launch_blockscout.log"
     print(f"Launching the blockscout block explorer. Logging to {log_file}\n"
           "This may take a while...")
+    
+    # Note that this file should be checked during startup especially
+    # if its taking way too long to startup. There might be a situation
+    # in which the docker compose file is badly formatted which causes
+    # the startup to fail and hang.
+    write_file_pointer = open(log_file, 'w+')
 
     PROCESS_MGR.start(
         "spin up block explorer",
         "DOCKER_TAG=5.1.0 docker compose -f "
         "docker-compose-no-build-hardhat-network.yml up",
         cwd="blockscout/docker-compose",
-        forward="fd", stdout=log_file, stderr=subprocess.STDOUT)
+        forward="fd", stdout=write_file_pointer, stderr=subprocess.STDOUT)
 
 ####################################################################################################
 
@@ -237,6 +243,7 @@ if __name__ == "__main__":
             l2.deploy_and_start(config, paths)
             if lib.args.explorer:
                 launch_blockscout()
+            print("All components up and running!")
             PROCESS_MGR.wait_all()
 
         if lib.args.command == "clean":
