@@ -66,9 +66,9 @@ class L2Config:
 
         # TODO
 
-        self.l1_rpc_port = 9545
+        self.l1_rpc_port = 8545
         """
-        Port to use for the L1 RPC server (9545 by default).
+        Port to use for the L1 RPC server (8545 by default).
         """
 
         # ==========================================================================================
